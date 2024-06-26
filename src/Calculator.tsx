@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
-import Buttons from "./components/Buttons";
-import Input from "./components/Input";
+import Buttons from "./components/Buttons/Buttons";
+import Input from "./components/Input/Input";
 import { Operators } from "./types/operations";
+import "./styles.scss";
 
 const Calculator = () => {
   const [input, setInput] = useState<string | null>(null);

@@ -1,3 +1,5 @@
+import "./Buttons.scss";
+
 interface IProps {
   handleOnPress: (value: string) => void;
 }
@@ -26,27 +28,45 @@ const Buttons = ({ handleOnPress }: IProps) => {
       </div>
 
       <div className="buttons__row">
-        <button onClick={onPress}>7</button>
-        <button onClick={onPress}>8</button>
-        <button onClick={onPress}>9</button>
+        <button className="buttons__number" onClick={onPress}>
+          7
+        </button>
+        <button className="buttons__number" onClick={onPress}>
+          8
+        </button>
+        <button className="buttons__number" onClick={onPress}>
+          9
+        </button>
         <button className="buttons__last" onClick={onPress}>
           ✕
         </button>
       </div>
 
       <div className="buttons__row">
-        <button onClick={onPress}>4</button>
-        <button onClick={onPress}>5</button>
-        <button onClick={onPress}>6</button>
+        <button className="buttons__number" onClick={onPress}>
+          4
+        </button>
+        <button className="buttons__number" onClick={onPress}>
+          5
+        </button>
+        <button className="buttons__number" onClick={onPress}>
+          6
+        </button>
         <button className="buttons__last" onClick={onPress}>
           -
         </button>
       </div>
 
       <div className="buttons__row">
-        <button onClick={onPress}>1</button>
-        <button onClick={onPress}>2</button>
-        <button onClick={onPress}>3</button>
+        <button className="buttons__number" onClick={onPress}>
+          1
+        </button>
+        <button className="buttons__number" onClick={onPress}>
+          2
+        </button>
+        <button className="buttons__number" onClick={onPress}>
+          3
+        </button>
         <button className="buttons__last" onClick={onPress}>
           +
         </button>
