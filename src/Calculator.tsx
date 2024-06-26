@@ -78,11 +78,32 @@ const Calculator = () => {
         clear();
         break;
       case "=":
-        // when equal is pressed
+        setEqualSignPressed(true);
+        if (input === null || prevSymbol === null) return;
+        const finalTotal: number = calculate(
+          parseFloat(input),
+          total,
+          prevSymbol
+        );
+        if (input === "0" && prevSymbol === "÷") {
+          setHasError(true);
+          return;
+        }
+        setInput(finalTotal.toString());
+        setPrevSymbol(null);
+        if (showOldInput) setShowOldInput(false);
         break;
       case "%":
       case "+/-":
-        //handle logic for performing negative/positive or percentage conversion
+        if (input === null) {
+          return;
+        }
+        const changedValue: number = calculate(
+          parseFloat(input),
+          total,
+          symbol
+        );
+        setInput(changedValue.toString());
         break;
       case ".":
         if (!input?.includes(".")) {
