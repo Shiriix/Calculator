@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import Buttons from "./components/Buttons";
 import Input from "./components/Input";
 
@@ -12,8 +12,35 @@ const Calculator = () => {
   const [prevSymbol, setPrevSymbol] = useState<string | null>(null);
   const [equalSignPressed, setEqualSignPressed] = useState<boolean>(false);
 
-  const handleButtonPress = (value: string): void => {};
+  const currentInput: string | null = useMemo<string | null>(
+    () => (showOldInput ? oldInput : input),
+    [input, showOldInput]
+  );
+
+  const handleButtonPress = (value: string): void => {
+    if (showOldInput) {
+      setShowOldInput(false);
+    }
+    const numValue: number = parseInt(value);
+    if (Number.isNaN(numValue)) {
+      handleSymbol(value);
+    } else {
+      storeNumtoScreen(value);
+      if (equalSignPressed) {
+        setTotal(0);
+      }
+    }
+    if (value !== "=") {
+      setEqualSignPressed(
+        (value === "+/-" && equalSignPressed) ||
+          value === "%" ||
+          (value === "." && equalSignPressed)
+      );
+    }
+  };
+
   const handleSymbol = (symbol: string) => {};
+
   const storeNumtoScreen = (num: string) => {
     setInput((prev) =>
       prev === "0" ||
@@ -26,7 +53,7 @@ const Calculator = () => {
 
   return (
     <div className="calculator__container">
-      <Input error={hasError} input={null ?? "0"} />
+      <Input error={hasError} input={currentInput ?? "0"} />
       <Buttons handleOnPress={handleButtonPress} />
     </div>
   );
