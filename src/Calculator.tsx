@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
 import Buttons from "./components/Buttons/Buttons";
 import Input from "./components/Input/Input";
-import { Operators } from "./types/operations";
+
 import "./styles.scss";
+import calculate from "./utils/calculate";
 
 const Calculator = () => {
   const [input, setInput] = useState<string | null>(null);
@@ -17,23 +18,6 @@ const Calculator = () => {
     () => (showOldInput ? oldInput : input),
     [input, showOldInput]
   );
-
-  const operations: Operators = {
-    "+": (n1, n2) => n1 + n2,
-    "-": (n1, n2) => n1 - n2,
-    "✕": (n1, n2) => n1 * n2,
-    "÷": (n1, n2) => n1 / n2,
-    "%": (_n1, n2) => n2 / 100,
-    "+/-": (_n1, n2) => n2 * -1,
-  };
-
-  const calculate = (
-    buffer: number,
-    currentTotal: number,
-    symbol: string
-  ): number => {
-    return operations[symbol as keyof Operators](currentTotal, buffer);
-  };
 
   const clear = () => {
     setInput(null);
