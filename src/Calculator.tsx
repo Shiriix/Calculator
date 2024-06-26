@@ -20,19 +20,35 @@ const Calculator = () => {
   const operations: Operators = {
     "+": (n1, n2) => n1 + n2,
     "-": (n1, n2) => n1 - n2,
-    X: (n1, n2) => n1 * n2,
+    "✕": (n1, n2) => n1 * n2,
     "÷": (n1, n2) => n1 / n2,
     "%": (_n1, n2) => n2 / 100,
     "+/-": (_n1, n2) => n2 * -1,
   };
 
-  //   const calculate = (
-  //     buffer: number,
-  //     currentTotal: number,
-  //     symbol: string
-  //   ): number => {
-  //     return operations[symbol](currentTotal, buffer);
-  //   };
+  const calculate = (
+    buffer: number,
+    currentTotal: number,
+    symbol: string
+  ): number => {
+    return operations[symbol as keyof Operators](currentTotal, buffer);
+  };
+
+  const clear = () => {
+    setInput(null);
+    setOldInput(null);
+    setShowOldInput(false);
+    setTotal(0);
+    setPrevSymbol(null);
+    setHasError(false);
+  };
+
+  const prepareNextOperation = (symbol: string) => {
+    setPrevSymbol(symbol);
+    setShowOldInput(true);
+    setOldInput(input);
+    setInput(null);
+  };
 
   const handleButtonPress = (value: string): void => {
     if (showOldInput) {
@@ -59,7 +75,7 @@ const Calculator = () => {
   const handleSymbol = (symbol: string) => {
     switch (symbol) {
       case "C":
-        // clear function
+        clear();
         break;
       case "=":
         // when equal is pressed
@@ -69,13 +85,30 @@ const Calculator = () => {
         //handle logic for performing negative/positive or percentage conversion
         break;
       case ".":
-        // handle decimal
+        if (!input?.includes(".")) {
+          storeNumtoScreen(symbol);
+        }
         break;
       case "+":
       case "-":
       case "✕":
       case "÷":
-        // standard operations
+        if (input === null || prevSymbol === null) {
+          if (prevSymbol === null && input !== null) {
+            setTotal(parseFloat(input));
+          }
+          prepareNextOperation(symbol);
+          return;
+        }
+
+        const newTotal: number = calculate(
+          parseFloat(input),
+          total,
+          prevSymbol
+        );
+        setTotal(newTotal);
+        prepareNextOperation(symbol);
+
         break;
       default:
         break;

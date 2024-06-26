@@ -30,7 +30,7 @@ const Buttons = ({ handleOnPress }: IProps) => {
         <button onClick={onPress}>8</button>
         <button onClick={onPress}>9</button>
         <button className="buttons__last" onClick={onPress}>
-          X
+          ✕
         </button>
       </div>
 
